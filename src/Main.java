@@ -1,3 +1,5 @@
+import org.json.JSONObject;
+
 public class Main {
     public static void main(String[] args) {
         class Time {
@@ -33,17 +35,7 @@ public class Main {
         Human korotishka = new Human("Korotishka", Human.Gender.MALE);
 
         spaceShip.place(0, fl, cover);
-        spaceShip.place(1, fl, cover, new Interactable() {
-            @Override
-            public void interact(Human human) {
-                System.out.println(human.getName() + " draws...");
-            }
-
-            @Override
-            public String getName() {
-                return "Canvas";
-            }
-        });
+        spaceShip.place(1, fl, cover, new Canvas());
         spaceShip.enter(0, pilulkin);
         spaceShip.enter(1, tubik, jenshina, korotishka);
 

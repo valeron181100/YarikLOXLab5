@@ -1,8 +1,18 @@
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class Flashlight implements Interactable {
 
+    private String name;
 
+    public Flashlight(){
+        name = "Flashlight";
+    }
+
+    public Flashlight(JSONObject json){
+        name = json.getString("name");
+    }
 
     public void interact(Human human) {
         System.out.println(human.name + " lights the room up.");
@@ -12,12 +22,16 @@ public class Flashlight implements Interactable {
     }
 
     public String getName() {
-        return "Flashlight";
+        return name;
     }
 }
 
 interface Interactable {
     void interact(Human human);
-
+    default JSONObject getJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("name", getName());
+        return jsonObject;
+    }
     String getName();
 }

@@ -1,10 +1,20 @@
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class Cover implements Interactable {
     private ArrayList<Human> humansUnder;
 
+    private String name;
+
+    public Cover(JSONObject json){
+        humansUnder = new ArrayList<Human>();
+        name = json.getString("name");
+    }
+
     public Cover() {
         humansUnder = new ArrayList<Human>();
+        name = "Cover";
     }
 
     public void interact(Human human) {
@@ -22,6 +32,6 @@ public class Cover implements Interactable {
     }
 
     public String getName() {
-        return "Cover";
+        return name;
     }
 }

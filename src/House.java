@@ -1,3 +1,5 @@
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.lang.Math;
 
@@ -54,6 +56,12 @@ class Room {
         this.name = name;
     }
 
+    @SuppressWarnings("unchecked")
+    public Room(JSONObject json){
+        interactables = (ArrayList<Interactable>)json.get("interactables");
+        name = json.getString("name");
+    }
+
     public void placeInteractable(Interactable interactable) {
         interactables.add(interactable);
         System.out.println(interactable.getName() + " placed in " + name);
@@ -95,4 +103,14 @@ class Room {
     }
 
     public ArrayList<Interactable> getInteractables() { return interactables; };
+
+    public JSONObject getJson(){
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("interactables", interactables);
+
+        jsonObject.put("name", name);
+
+        return jsonObject;
+    }
 }
