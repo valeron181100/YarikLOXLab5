@@ -1,7 +1,9 @@
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.lang.Math;
+import java.util.List;
 
 public class House {
     protected Room[] rooms;
@@ -58,7 +60,17 @@ class Room {
 
     @SuppressWarnings("unchecked")
     public Room(JSONObject json){
-        interactables = (ArrayList<Interactable>)json.get("interactables");
+        interactables = new ArrayList<>();
+        JSONArray jsonInteractables = json.getJSONArray("interactables");
+        jsonInteractables.forEach(p -> {
+            String name = ((JSONObject)p).getString("name");
+            try {
+                Interactable object = (Interactable) Class.forName(name).newInstance();
+                interactables.add(object);
+            } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+                System.err.println(e.getMessage());
+            }
+        });
         name = json.getString("name");
     }
 
@@ -107,7 +119,11 @@ class Room {
     public JSONObject getJson(){
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put("interactables", interactables);
+        JSONArray array = new JSONArray();
+
+        interactables.forEach(p -> array.put(p.getJson()));
+
+        jsonObject.put("interactables", array);
 
         jsonObject.put("name", name);
 

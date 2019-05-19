@@ -8,9 +8,6 @@ public class Canvas implements Interactable {
         name = "Canvas";
     }
 
-    public Canvas(JSONObject json){
-        name = json.getString("name");
-    }
 
     @Override
     public void interact(Human human) {
@@ -21,4 +18,5 @@ public class Canvas implements Interactable {
     public String getName() {
         return name;
     }
+
 }

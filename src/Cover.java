@@ -7,10 +7,6 @@ public class Cover implements Interactable {
 
     private String name;
 
-    public Cover(JSONObject json){
-        humansUnder = new ArrayList<Human>();
-        name = json.getString("name");
-    }
 
     public Cover() {
         humansUnder = new ArrayList<Human>();
@@ -34,4 +30,5 @@ public class Cover implements Interactable {
     public String getName() {
         return name;
     }
+
 }

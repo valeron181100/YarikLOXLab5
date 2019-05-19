@@ -10,10 +10,6 @@ public class Flashlight implements Interactable {
         name = "Flashlight";
     }
 
-    public Flashlight(JSONObject json){
-        name = json.getString("name");
-    }
-
     public void interact(Human human) {
         System.out.println(human.name + " lights the room up.");
         Room room = human.getCurrentRoom();
@@ -24,6 +20,7 @@ public class Flashlight implements Interactable {
     public String getName() {
         return name;
     }
+
 }
 
 interface Interactable {
@@ -33,5 +30,6 @@ interface Interactable {
         jsonObject.put("name", getName());
         return jsonObject;
     }
+
     String getName();
 }
