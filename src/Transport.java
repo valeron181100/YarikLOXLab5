@@ -9,9 +9,21 @@ public class Transport extends House {
         }
     }
 
+    public Transport(String name, Room ... rooms) {
+        this.name = name;
+        this.rooms = new Cabin[rooms.length];
+        for (int i = 0; i < rooms.length; i++) {
+            this.rooms[i] = new Cabin(rooms[i]);
+        }
+    }
+
     public class Cabin extends Room {
         public Cabin(String name) {
             super(name);
+        }
+
+        public Cabin(Room room){
+            super("Cabin " + room.getName());
         }
 
         @Override

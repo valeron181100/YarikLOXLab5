@@ -1,6 +1,8 @@
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.smartcardio.Card;
 import java.util.ArrayList;
 import java.lang.Math;
 import java.util.List;
@@ -47,7 +49,7 @@ public class House {
     }
 }
 
-class Room {
+class Room implements Comparable {
     private ArrayList<Human> humans;
     private ArrayList<Interactable> interactables;
     private String name;
@@ -61,14 +63,20 @@ class Room {
     @SuppressWarnings("unchecked")
     public Room(JSONObject json){
         interactables = new ArrayList<>();
-        JSONArray jsonInteractables = json.getJSONArray("interactables");
+        JSONArray jsonInteractables;
+        try {
+            jsonInteractables = new JSONArray(json.getString("interactables"));
+        }catch (JSONException e){
+            jsonInteractables = json.getJSONArray("interactables");
+        }
+
         jsonInteractables.forEach(p -> {
             String name = ((JSONObject)p).getString("name");
             try {
                 Interactable object = (Interactable) Class.forName(name).newInstance();
                 interactables.add(object);
             } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-                System.err.println(e.getMessage());
+                System.err.println("Error: Invalid Json");
             }
         });
         name = json.getString("name");
@@ -124,9 +132,42 @@ class Room {
         interactables.forEach(p -> array.put(p.getJson()));
 
         jsonObject.put("interactables", array);
-
         jsonObject.put("name", name);
 
         return jsonObject;
+    }
+
+    @Override
+    public String toString() {
+        return "Комната " + name;
+    }
+
+    @Override
+    public int hashCode() {
+        int prime = 1;
+        int result = 1;
+        result = (int)(result * prime + interactables.size() * Math.pow(prime, 2) + name.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Room other = (Room) obj;
+        if (!interactables.equals(other.interactables))
+            return false;
+        if (!name.equals(other.name))
+            return false;
+        return true;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return this.hashCode() - o.hashCode();
     }
 }

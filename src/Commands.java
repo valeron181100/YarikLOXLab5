@@ -6,6 +6,7 @@ public enum Commands {
     SHOW,
     LOAD,
     REMOVE_LAST,
+    DEEPSHOW,
     ADD,
     ADD_IF_MIN,
     REMOVE;

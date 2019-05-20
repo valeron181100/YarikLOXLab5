@@ -16,7 +16,7 @@ public class CommandParser {
         if(args.length == 0)
             throw new EmptyInputException(input);
         else if(args.length == 1){
-            if(args[0].trim().matches("help|exit|start|info|show|load|remove_last")) {
+            if(args[0].trim().matches("help|exit|start|info|show|load|remove_last|deepshow")) {
                 Commands command = Commands.valueOf(args[0].trim().toUpperCase());
                 if (command == Commands.ADD_IF_MIN ||
                         command == Commands.ADD ||
