@@ -11,7 +11,7 @@ public class Tests {
         room.placeInteractable(new Flashlight());
         room.placeInteractable(new Cover());
         JSONObject jsonObject = room.getJson();
-        Room room1 = new Room(jsonObject);
+        System.out.println(jsonObject);
         int  k = 0;
     }
 }
